@@ -1,16 +1,17 @@
 
 const getHeader = () => {
   return `
-    <header class="mb-3 py-2 px-2 rounded-lg bg-gradient-to-r from-slate-900 to-slate-900">
+    <header class="mb-3 py-2 px-2">
       <h1 class="text-3xl font-medium">Total $95,000</h1>
-      <h2 class="text-2xl font-medium text-yellow-500">Monthly $214 <span class="text-xl">($7,900)</span></h2>
+      <h2 class="text-2xl font-medium text-yellow-500">Monthly $214 <span class="text-base font-normal inline-block align-middle">($7,900)</span></h2>
     </header>`
 }
 
 const getAssetsList = (data) => {
   const list = data.reduce((acc, item) => {
-    const gradient = Number(item[5]) ? 'bg-gradient-to-r from-green-900 to-green-800' : 'bg-gradient-to-r from-slate-900 to-slate-800';
-    const rate = Number(item[5]) && item[6] === 'percent' ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${item[5]}%</p>` : ''
+    const gradient = Number(item[5]) ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800';
+    const rate = Number(item[5]) ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${item[5]}%</p>` : ''
+    const monthly = Number(item[5]) ? Number(item[5]) : ''
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: item[4],
@@ -18,14 +19,14 @@ const getAssetsList = (data) => {
     });
     acc = acc + `
     <li class="w-full">
-      <button class="w-full h-24 relative text-left rounded-lg px-2 py-2 ${gradient}">
+      <button class="flex flex-col w-full h-24 relative text-left rounded-lg px-2 py-2 ${gradient}">
         <div class="h-10">
-          <p class="text-base">${item[1]}</p>
-          <p class="text-xs">${item[2]}</p>
+          <p class="text-base font-medium">${item[1]}</p>
+          <p class="text-sm -mt-1 font-light">${item[2]}</p>
         </div>
         <div>
-          <p class="text-sm font-medium">${formatter.format(item[3])}</p>
-          <p class="text-sm text-yellow-500">$0</p>
+          <p class="text-base font-medium">${formatter.format(item[3])}</p>
+          <p class="text-sm -mt-1 text-yellow-500">${monthly}</p>
           ${rate}
         </div>
       </button>
@@ -34,7 +35,7 @@ const getAssetsList = (data) => {
     return acc;
   }, '');
 
-  return `<ul class="grid gap-2 grid-cols-2 pb-20">${list}</ul>`
+  return `<ul class="grid gap-2 grid-cols-2 pb-24">${list}</ul>`
 }
 
 const getFooter = () => {
@@ -52,6 +53,25 @@ const renderAssets = () => {
   const assetsData = window.storage.assets.get().values
   console.log('assetsData', assetsData)
   document.getElementById('content').innerHTML = getHeader() + getAssetsList(assetsData) + getFooter()
+}
+
+const loginForm = () => {
+  document.getElementById('content').innerHTML = `
+      <div id="initialSetup" class="fixed w-4/5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+        <form id="loginForm" class="flex flex-col">
+          <input name="clientId" placeholder="clientId" value="" type="text" class="h-10 mb-2 p-2 rounded-md text-black" required />
+          <button class="h-10 mt-4 bg-green-500 rounded-md" type="submit">LOGIN</button>
+        </form>
+      </div>`
+
+  let loginForm = document.getElementById('loginForm');
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    window.storage.apiData.set(Object.fromEntries(new FormData(e.target)))
+    document.getElementById('initialSetup').setAttribute('hidden', true);
+    requestTokenAndSheet();
+  });
 }
 
 const requestSheet = () => {
@@ -80,28 +100,5 @@ const requestTokenAndSheet = () => {
 }
 
 addEventListener('DOMContentLoaded', () => {
-  const assets = window.storage.assets.get()
-
-  if (window.storage.apiData.get() && !assets) {
-    requestTokenAndSheet();
-  } else if (assets) {
-    renderAssets();
-  } else {
-    document.getElementById('content').innerHTML = `
-      <div id="initialSetup" class="fixed w-4/5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-        <form id="loginForm" class="flex flex-col">
-          <input name="clientId" placeholder="clientId" value="" type="text" class="h-10 mb-2 p-2 text-black" required />
-          <button class="bg-green-500 h-10 mt-4" type="submit">LOGIN</button>
-        </form>
-      </div>`
-
-    let loginForm = document.getElementById('loginForm');
-
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      window.storage.apiData.set(Object.fromEntries(new FormData(e.target)))
-      document.getElementById('initialSetup').setAttribute('hidden', true);
-      requestTokenAndSheet();
-    });
-  }
+  !window.storage.assets.get() ? loginForm() : renderAssets()
 });
