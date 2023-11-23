@@ -17,7 +17,7 @@ addEventListener('DOMContentLoaded', () => {
         console.log(JSON.stringify(response.result));
         console.log(response.result);
       }, reason => {
-        console.log('Error: ' + reason.result.error.message);
+        console.log(reason);
       });
     };
 
