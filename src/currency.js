@@ -8,43 +8,40 @@ const format = (price, currency = 'USD', digits = 0) => {
   }).format(price).replace(/\s/g, '').replace('UAH', '₴')
 }
 
-const getMonthIncome = (total = 0, interestRate = 0, from, to) => {
-  if (to) {
-    return convertTo(total * interestRate / 100 / 12, from, to)
-  } else {
-    return format(total * interestRate / 100 / 12, from)
-  }
-}
-
 const convertTo = (total = 0, from = 'UAH', to = 'USD') => {
-  return format(total * window.constants.currencyRates[`${from}_${to}`], to)
+  return total * window.constants.currencyRates[`${from}_${to}`]
 }
 
-// const convertPrice = (total: number, currency: string, allRates: []) => {
-//   return total / allRates.find(item => item.sellId === currency)?.sell
-// }
+const getMonthIncome = (total = 0, interestRate = 0, from, to) => {
+  const monthIncome = total * interestRate / 100 / 12;
 
-const getTotalPrimary = (assets, primaryCurrency, rates) => {
-  return assets.reduce((sum, currentItem) =>
-    sum + Number(((currentItem.currency === primaryCurrency) ? currentItem.value : convertPrice(currentItem.value, currentItem.currency, rates))), 0)
+  return to ? convertTo(monthIncome, from, to) : monthIncome
 }
 
-const getTotalIncomePrimary = (assets, primaryCurrency, rates) => {
-  return assets.reduce((sum, currentItem) => {
-    const monthIncome = getMonthIncome(currentItem.value, currentItem.monthIncomeType, currentItem.monthIncome)
-    return sum + Number(((currentItem.currency === primaryCurrency) ? monthIncome : convertPrice(monthIncome, currentItem.currency, rates)))
+const getTotalUSD = (assets) => {
+  const total = assets.reduce((sum, asset) => {
+    const currentPrice = asset[4] === 'USD' ? Number(asset[3]) : convertTo(Number(asset[3]), asset[4])
+    return sum + currentPrice
   }, 0)
+
+  return format(total)
 }
 
-const getTotalIncomeUAH = (assets, primaryCurrency, rates) => {
-  return assets.reduce((sum, currentItem) => {
-    const monthIncome = getMonthIncome(currentItem.value, currentItem.monthIncomeType, currentItem.monthIncome)
-    return sum + Number(((currentItem.currency !== primaryCurrency) ? monthIncome : convertToUAH(Number(monthIncome))))
+const getMonthlyTotalUSD = (assets) => {
+  const total = assets.reduce((sum, asset) => {
+    const monthIncome = getMonthIncome(Number(asset[3]), Number(asset[5]), 'USD');
+    const currentPrice = asset[4] === 'USD' ? monthIncome : convertTo(monthIncome, asset[4])
+
+    return sum + currentPrice
   }, 0)
+
+  return format(total)
 }
 
 window.currency = {
   format: format,
   convertTo: convertTo,
   getMonthIncome: getMonthIncome,
+  getTotalUSD: getTotalUSD,
+  getMonthlyTotalUSD: getMonthlyTotalUSD,
 }

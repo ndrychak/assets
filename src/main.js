@@ -8,9 +8,9 @@ const getAssetsList = (data) => {
 
     const gradient = interestRate ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800';
     const rate = interestRate ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${interestRate}%</p>` : ''
-    const valueUSD = currency !== 'USD' ? `<span class="font-normal text-sm opacity-70">${window.currency.convertTo(valueInital, currency, 'USD')}</span> ` : ''
-    const monthIncomeInitial = interestRate ? window.currency.getMonthIncome(valueInital, interestRate, currency) : ''
-    const monthIncomeUSD = interestRate && (currency !== 'USD') ? `<span class="font-normal text-sm opacity-70">${window.currency.getMonthIncome(valueInital, interestRate, currency, 'USD')}</span>` : ''
+    const valueUSD = currency !== 'USD' ? `<span class="font-normal text-sm opacity-70">${window.currency.format(window.currency.convertTo(valueInital, currency, 'USD'), currency)}</span> ` : ''
+    const monthIncomeInitial = interestRate ? window.currency.format(window.currency.getMonthIncome(valueInital, interestRate, currency), currency) : ''
+    const monthIncomeUSD = interestRate && (currency !== 'USD') ? `<span class="font-normal text-sm opacity-70">${window.currency.format(window.currency.getMonthIncome(valueInital, interestRate, currency, 'USD'))}</span>` : ''
 
     acc = acc + window.templates.assetItem({
       gradient,
@@ -30,8 +30,11 @@ const getAssetsList = (data) => {
 }
 
 const renderAssets = () => {
-  const assetsData = window.storage.assets.get().values
-  document.getElementById('content').innerHTML = window.templates.header() + getAssetsList(assetsData) + window.templates.footer()
+  const assets = window.storage.assets.get().values
+  const total = window.currency.getTotalUSD(assets)
+  const monthlyUSD = window.currency.getMonthlyTotalUSD(assets)
+
+  document.getElementById('content').innerHTML = window.templates.header(total, monthlyUSD) + getAssetsList(assets) + window.templates.footer()
 }
 
 const loginForm = () => {

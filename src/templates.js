@@ -1,8 +1,8 @@
-const header = () => {
+const header = (total, monthlyUSD) => {
   return `
     <header class="mb-3 py-2 px-2">
-      <h1 class="text-3xl font-medium">Total $95,000</h1>
-      <h2 class="text-2xl font-medium text-yellow-500">Monthly $214 <span class="text-base font-normal inline-block align-middle">($7,900)</span></h2>
+      <h1 class="text-3xl font-medium">Total ${total}</h1>
+      <h2 class="text-2xl font-medium text-yellow-500">Monthly ${monthlyUSD} <span class="text-base font-normal inline-block align-middle">($7,900)</span></h2>
     </header>`
 }
 
