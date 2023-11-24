@@ -1,36 +1,27 @@
-
-const getHeader = () => {
-  return `
-    <header class="mb-3 py-2 px-2">
-      <h1 class="text-3xl font-medium">Total $95,000</h1>
-      <h2 class="text-2xl font-medium text-yellow-500">Monthly $214 <span class="text-base font-normal inline-block align-middle">($7,900)</span></h2>
-    </header>`
-}
-
 const getAssetsList = (data) => {
   const list = data.reduce((acc, item) => {
-    const gradient = Number(item[5]) ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800';
-    const rate = Number(item[5]) ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${item[5]}%</p>` : ''
-    const monthly = Number(item[5]) ? Number(item[5]) : ''
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: item[4],
-      maximumFractionDigits: 0,
-    });
-    acc = acc + `
-    <li class="w-full">
-      <button class="flex flex-col w-full h-24 relative text-left rounded-lg px-2 py-2 ${gradient}">
-        <div class="h-10">
-          <p class="text-base font-medium">${item[1]}</p>
-          <p class="text-sm -mt-1 font-light">${item[2]}</p>
-        </div>
-        <div>
-          <p class="text-base font-medium">${formatter.format(item[3])}</p>
-          <p class="text-sm -mt-1 text-yellow-500">${monthly}</p>
-          ${rate}
-        </div>
-      </button>
-    </li>`
+    const title = item[1];
+    const note = item[2];
+    const valueInital = Number(item[3]);
+    const currency = item[4];
+    const interestRate = Number(item[5]);
+
+    const gradient = interestRate ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800';
+    const rate = interestRate ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${interestRate}%</p>` : ''
+    const valueUSD = currency !== 'USD' ? `<span class="font-normal text-sm opacity-70">${window.currency.convertTo(valueInital, currency, 'USD')}</span> ` : ''
+    const monthIncomeInitial = interestRate ? window.currency.getMonthIncome(valueInital, interestRate, currency) : ''
+    const monthIncomeUSD = interestRate && (currency !== 'USD') ? `<span class="font-normal text-sm opacity-70">${window.currency.getMonthIncome(valueInital, interestRate, currency, 'USD')}</span>` : ''
+
+    acc = acc + window.templates.assetItem({
+      gradient,
+      title,
+      note,
+      valueUSD,
+      valueInital: window.currency.format(valueInital, currency),
+      monthIncomeUSD,
+      monthIncomeInitial,
+      rate
+    })
 
     return acc;
   }, '');
@@ -38,31 +29,13 @@ const getAssetsList = (data) => {
   return `<ul class="grid gap-2 grid-cols-2 pb-24">${list}</ul>`
 }
 
-const getFooter = () => {
-  return `
-    <footer class="fixed bottom-4 right-4">
-      <ul>
-        <li>
-          <button class="rounded-full text-4xl bg-green-500 w-16 h-16">+</button>
-        </li>
-      </ul>
-    </footer>`
-}
-
 const renderAssets = () => {
   const assetsData = window.storage.assets.get().values
-  console.log('assetsData', assetsData)
-  document.getElementById('content').innerHTML = getHeader() + getAssetsList(assetsData) + getFooter()
+  document.getElementById('content').innerHTML = window.templates.header() + getAssetsList(assetsData) + window.templates.footer()
 }
 
 const loginForm = () => {
-  document.getElementById('content').innerHTML = `
-      <div id="initialSetup" class="fixed w-4/5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-        <form id="loginForm" class="flex flex-col">
-          <input name="clientId" placeholder="clientId" value="" type="text" class="h-10 mb-2 p-2 rounded-md text-black" required />
-          <button class="h-10 mt-4 bg-green-500 rounded-md" type="submit">LOGIN</button>
-        </form>
-      </div>`
+  document.getElementById('content').innerHTML = window.templates.login()
 
   let loginForm = document.getElementById('loginForm');
 

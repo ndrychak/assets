@@ -4,10 +4,11 @@ window.constants = {
     assetsData: 'assets_data',
     accessToken: 'access_token',
   },
-  currency: {
-    USD: '$',
-    EUR: '€',
-    UAH: '₴',
+  currencyRates: {
+    USD_UAH: 36.020,
+    UAH_USD: 0.027,
+    USD_EUR: 0.910,
+    EUR_USD: 1.081
   }
 }
 
