@@ -76,5 +76,5 @@ const requestTokenAndSheet = () => {
 }
 
 addEventListener('DOMContentLoaded', () => {
-  !window.storage.assets.get() ? loginForm() : renderAssets()
+  window.storage.assets.get() ? renderAssets() : loginForm()
 });

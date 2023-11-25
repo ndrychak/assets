@@ -1,8 +1,8 @@
 const header = (total, monthlyUSD) => {
   return `
-    <header class="mb-3 py-2 px-2">
-      <h1 class="text-3xl font-medium">Total ${total}</h1>
-      <h2 class="text-2xl font-medium text-yellow-500">Monthly ${monthlyUSD} <span class="text-base font-normal inline-block align-middle">($7,900)</span></h2>
+    <header class="mb-3 py-2 px-2 flex flex-row justify-between items-center">
+      <h1 class="text-3xl font-medium">${total}</h1>
+      <h2 class="text-2xl font-medium text-yellow-500">${monthlyUSD} <span class="text-base font-normal inline-block align-middle">($7,900)</span></h2>
     </header>`
 }
 
@@ -30,14 +30,14 @@ const login = () => {
 const assetItem = ({ gradient, title, note, valueUSD, valueInital, monthIncomeUSD, monthIncomeInitial, rate }) => {
   return `
     <li class="w-full">
-      <button class="flex flex-col w-full h-24 relative text-left rounded-lg px-2 py-2 ${gradient}">
+      <button class="flex flex-col w-full h-[88px] relative text-left rounded-lg px-2 py-1 ${gradient}">
         <div class="h-10">
           <p class="text-base font-medium">${title}</p>
           <p class="text-sm -mt-1 font-light">${note}</p>
         </div>
         <div>
           <p class="text-base font-medium">${valueUSD}${valueInital}</p>
-          <p class="text-sm -mt-1 text-yellow-500">${monthIncomeUSD} ${monthIncomeInitial}</p>
+          <p class="text-sm -mt-1 font-medium text-yellow-500">${monthIncomeUSD} ${monthIncomeInitial}</p>
           ${rate}
         </div>
       </button>
