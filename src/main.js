@@ -1,20 +1,18 @@
 const getAssetsList = (data) => {
   const list = data.reduce((acc, item) => {
-    const valueUSD = window.currency.format(window.currency.convertTo(item.value, item.currency, 'USD'), item.currency);
-    const monthIncomeUSD = window.currency.format(window.currency.getMonthIncome(item.value, item.interestRate, item.currency, 'USD'));
     const gradient = item.interestRate ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800';
-    const rate = item.interestRate ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${item.interestRate}%</p>` : ''
-    const valueUSDRender = item.currency !== 'USD' ? `<span class="font-normal text-sm opacity-70">${valueUSD}</span> ` : ''
-    const monthIncomeInitial = item.interestRate ? window.currency.format(window.currency.getMonthIncome(item.value, item.interestRate, item.currency), item.currency) : ''
-    const monthIncomeUSDRender = item.interestRate && (item.currency !== 'USD') ? `<span class="font-normal text-sm opacity-70">${monthIncomeUSD}</span>` : ''
+    const rate = item.interestRate > 0.01 ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${item.interestRate}%</p>` : ''
+    const valueUSD = item.currency !== 'USD' ? `<span class="font-normal text-sm opacity-70">${window.currency.format(item.valueUSD)}</span> ` : ''
+    const monthIncomeInitial = item.interestRate > 0.01 ? window.currency.format(item.monthIncomeInitial, item.currency) : ''
+    const monthIncomeUSD = (item.interestRate > 0.01) && (item.currency !== 'USD') ? `<span class="font-normal text-sm opacity-70">${window.currency.format(item.monthIncomeUSD)}</span>` : ''
 
     acc = acc + window.templates.assetItem({
       gradient,
       title: item.title,
       note: item.note,
-      valueUSD: valueUSDRender,
-      valueInital: window.currency.format(item.value, item.currency),
-      monthIncomeUSD: monthIncomeUSDRender,
+      valueUSD,
+      valueInitial: window.currency.format(item.valueInitial, item.currency),
+      monthIncomeUSD,
       monthIncomeInitial,
       rate
     })

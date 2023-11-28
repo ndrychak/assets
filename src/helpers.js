@@ -9,7 +9,10 @@ window.constants = {
     USD_UAH: 36.020,
     UAH_USD: 0.027,
     USD_EUR: 0.910,
-    EUR_USD: 1.081
+    EUR_USD: 1.081,
+    USD_USD: 1,
+    EUR_EUR: 1,
+    UAH_UAH: 1,
   }
 }
 
@@ -23,13 +26,20 @@ window.storage = {
       const assets = [];
 
       data.forEach(item => {
+        const valueInitial = Number(item[3]);
+        const currency = item[4];
+        const interestRate = Number(item[5]);
+
         assets.push({
           id: item[0],
           title: item[1],
           note: item[2],
-          value: Number(item[3]),
-          currency: item[4],
-          interestRate: Number(item[5]),
+          valueInitial,
+          valueUSD: window.currency.convertTo(valueInitial, currency, 'USD'),
+          currency,
+          interestRate,
+          monthIncomeInitial: item.interestRate ? window.currency.getMonthIncome(valueInitial, interestRate) : 0,
+          monthIncomeUSD: item.interestRate ? window.currency.getMonthIncome(valueInitial, interestRate, currency, 'USD') : 0,
         })
       });
 

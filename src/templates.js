@@ -29,7 +29,7 @@ const login = () => {
     </div>`
 }
 
-const assetItem = ({ gradient, title, note, valueUSD, valueInital, monthIncomeUSD, monthIncomeInitial, rate }) => {
+const assetItem = ({ gradient, title, note, valueUSD, valueInitial, monthIncomeUSD, monthIncomeInitial, rate }) => {
   return `
     <li class="w-full">
       <button class="flex flex-col w-full h-[88px] relative text-left rounded-lg px-2 py-1 ${gradient}">
@@ -38,7 +38,7 @@ const assetItem = ({ gradient, title, note, valueUSD, valueInital, monthIncomeUS
           <p class="text-sm -mt-1 font-light">${note}</p>
         </div>
         <div>
-          <p class="text-base font-medium">${valueUSD}${valueInital}</p>
+          <p class="text-base font-medium">${valueUSD}${valueInitial}</p>
           <p class="text-sm -mt-1 font-medium text-yellow-500">${monthIncomeUSD} ${monthIncomeInitial}</p>
           ${rate}
         </div>
