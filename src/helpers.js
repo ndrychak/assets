@@ -38,8 +38,8 @@ window.storage = {
           valueUSD: window.currency.convertTo(valueInitial, currency, 'USD'),
           currency,
           interestRate,
-          monthIncomeInitial: item.interestRate ? window.currency.getMonthIncome(valueInitial, interestRate) : 0,
-          monthIncomeUSD: item.interestRate ? window.currency.getMonthIncome(valueInitial, interestRate, currency, 'USD') : 0,
+          monthIncomeInitial: interestRate ? window.currency.getMonthIncome(valueInitial, interestRate) : 0,
+          monthIncomeUSD: interestRate ? window.currency.getMonthIncome(valueInitial, interestRate, currency, 'USD') : 0,
         })
       });
 

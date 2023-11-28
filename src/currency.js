@@ -17,18 +17,7 @@ const getMonthIncome = (total = 0, interestRate = 0, from, to) => {
 }
 
 const getTotalUSD = (assets) => format(assets.reduce((sum, asset) => sum + asset.valueUSD, 0))
-
-const getMonthlyTotalUSD = (assets) => {
-  const total = assets.reduce((sum, asset) => {
-    const monthIncome = getMonthIncome(asset.valueInitial, asset.interestRate, 'USD');
-
-    const currentPrice = asset.currency === 'USD' ? monthIncome : convertTo(monthIncome, asset.currency)
-
-    return sum + currentPrice
-  }, 0)
-
-  return format(total)
-}
+const getMonthlyTotalUSD = (assets) => format(assets.reduce((sum, asset) => sum + asset.monthIncomeUSD, 0));
 
 window.currency = {
   format,

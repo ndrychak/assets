@@ -24,11 +24,11 @@ const getAssetsList = (data) => {
 }
 
 const renderAssets = () => {
-  const assets = window.storage.assets.get()
-  const total = window.currency.getTotalUSD(assets)
-  const monthlyUSD = window.currency.getMonthlyTotalUSD(assets)
+  const assets = window.storage.assets.get().sort((a, b) => b.valueUSD - a.valueUSD);
+  const total = window.currency.getTotalUSD(assets);
+  const monthlyUSD = window.currency.getMonthlyTotalUSD(assets);
 
-  document.getElementById('content').innerHTML = window.templates.header(total, monthlyUSD) + getAssetsList(assets) + window.templates.footer()
+  document.getElementById('content').innerHTML = window.templates.header(total, monthlyUSD) + getAssetsList(assets) + window.templates.footer();
 
   const refreshBtn = document.getElementById('refreshBtn');
 
