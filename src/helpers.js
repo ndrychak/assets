@@ -19,8 +19,23 @@ window.storage = {
       return data ? JSON.parse(data) : null;
     },
     set: (data) => {
-      localStorage.setItem(constants.storage.assetsData, JSON.stringify(data));
-      return data;
+      const assets = [];
+
+      console.log(data)
+
+      data.forEach(item => {
+        assets.push({
+          id: item[0],
+          title: item[1],
+          note: item[2],
+          value: Number(item[3]),
+          currency: item[4],
+          interestRate: Number(item[5]),
+        })
+      });
+
+      localStorage.setItem(constants.storage.assetsData, JSON.stringify(assets));
+      return assets;
     }
   },
   accessToken: {

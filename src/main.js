@@ -1,24 +1,20 @@
 const getAssetsList = (data) => {
   const list = data.reduce((acc, item) => {
-    const title = item[1];
-    const note = item[2];
-    const valueInital = Number(item[3]);
-    const currency = item[4];
-    const interestRate = Number(item[5]);
-
-    const gradient = interestRate ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800';
-    const rate = interestRate ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${interestRate}%</p>` : ''
-    const valueUSD = currency !== 'USD' ? `<span class="font-normal text-sm opacity-70">${window.currency.format(window.currency.convertTo(valueInital, currency, 'USD'), currency)}</span> ` : ''
-    const monthIncomeInitial = interestRate ? window.currency.format(window.currency.getMonthIncome(valueInital, interestRate, currency), currency) : ''
-    const monthIncomeUSD = interestRate && (currency !== 'USD') ? `<span class="font-normal text-sm opacity-70">${window.currency.format(window.currency.getMonthIncome(valueInital, interestRate, currency, 'USD'))}</span>` : ''
+    const valueUSD = window.currency.format(window.currency.convertTo(item.value, item.currency, 'USD'), item.currency);
+    const monthIncomeUSD = window.currency.format(window.currency.getMonthIncome(item.value, item.interestRate, item.currency, 'USD'));
+    const gradient = item.interestRate ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800';
+    const rate = item.interestRate ? `<p class="absolute top-2 right-2 font-medium text-xs text-white">${item.interestRate}%</p>` : ''
+    const valueUSDRender = item.currency !== 'USD' ? `<span class="font-normal text-sm opacity-70">${valueUSD}</span> ` : ''
+    const monthIncomeInitial = item.interestRate ? window.currency.format(window.currency.getMonthIncome(item.value, item.interestRate, item.currency), item.currency) : ''
+    const monthIncomeUSDRender = item.interestRate && (item.currency !== 'USD') ? `<span class="font-normal text-sm opacity-70">${monthIncomeUSD}</span>` : ''
 
     acc = acc + window.templates.assetItem({
       gradient,
-      title,
-      note,
-      valueUSD,
-      valueInital: window.currency.format(valueInital, currency),
-      monthIncomeUSD,
+      title: item.title,
+      note: item.note,
+      valueUSD: valueUSDRender,
+      valueInital: window.currency.format(item.value, item.currency),
+      monthIncomeUSD: monthIncomeUSDRender,
       monthIncomeInitial,
       rate
     })
@@ -30,7 +26,7 @@ const getAssetsList = (data) => {
 }
 
 const renderAssets = () => {
-  const assets = window.storage.assets.get().values
+  const assets = window.storage.assets.get()
   const total = window.currency.getTotalUSD(assets)
   const monthlyUSD = window.currency.getMonthlyTotalUSD(assets)
 
@@ -40,7 +36,7 @@ const renderAssets = () => {
 const loginForm = () => {
   document.getElementById('content').innerHTML = window.templates.login()
 
-  let loginForm = document.getElementById('loginForm');
+  const loginForm = document.getElementById('loginForm');
 
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -56,7 +52,7 @@ const requestSheet = () => {
   })
     .then(resp => resp.json())
     .then(json => {
-      window.storage.assets.set(json);
+      window.storage.assets.set(json.values);
       renderAssets();
     })
 }

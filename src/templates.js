@@ -11,7 +11,7 @@ const footer = () => {
     <footer class="fixed bottom-4 right-4">
       <ul>
         <li>
-          <button class="rounded-full text-4xl bg-green-500 w-16 h-16">+</button>
+          <button id="appendTest" class="rounded-full text-4xl bg-green-500 w-16 h-16">+</button>
         </li>
       </ul>
     </footer>`
