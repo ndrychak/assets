@@ -1,4 +1,5 @@
 window.constants = {
+  sheetId: '1-KdKfoODvbDzFkFMIfCTHYqy3uP6RDexo_chF1pOcQ4',
   storage: {
     apiData: 'api_data',
     assetsData: 'assets_data',
@@ -20,8 +21,6 @@ window.storage = {
     },
     set: (data) => {
       const assets = [];
-
-      console.log(data)
 
       data.forEach(item => {
         assets.push({

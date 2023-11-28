@@ -11,7 +11,9 @@ const footer = () => {
     <footer class="fixed bottom-4 right-4">
       <ul>
         <li>
-          <button id="appendTest" class="rounded-full text-4xl bg-green-500 w-16 h-16">+</button>
+          <button id="refreshBtn" class="relative rounded-full bg-green-500 w-16 h-16">
+            <img src="assets/refresh.png" class="absolute w-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"/>
+          </button>
         </li>
       </ul>
     </footer>`
@@ -19,7 +21,7 @@ const footer = () => {
 
 const login = () => {
   return `
-    <div id="initialSetup" class="fixed w-4/5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+    <div id="initialSetup" class="fixed w-4/5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <form id="loginForm" class="flex flex-col">
         <input name="clientId" placeholder="clientId" value="" type="text" class="h-10 mb-2 p-2 rounded-md text-black" required />
         <button class="h-10 mt-4 bg-green-500 rounded-md" type="submit">LOGIN</button>

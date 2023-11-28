@@ -31,6 +31,13 @@ const renderAssets = () => {
   const monthlyUSD = window.currency.getMonthlyTotalUSD(assets)
 
   document.getElementById('content').innerHTML = window.templates.header(total, monthlyUSD) + getAssetsList(assets) + window.templates.footer()
+
+  const refreshBtn = document.getElementById('refreshBtn');
+
+  refreshBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    requestSheet();
+  });
 }
 
 const loginForm = () => {
@@ -47,7 +54,7 @@ const loginForm = () => {
 }
 
 const requestSheet = () => {
-  fetch('https://sheets.googleapis.com/v4/spreadsheets/1-KdKfoODvbDzFkFMIfCTHYqy3uP6RDexo_chF1pOcQ4/values/main', {
+  fetch(`https://sheets.googleapis.com/v4/spreadsheets/${window.constants.sheetId}/values/main`, {
     headers: { Authorization: `Bearer ${window.storage.accessToken.get()}` }
   })
     .then(resp => resp.json())
