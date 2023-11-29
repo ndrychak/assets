@@ -16,8 +16,15 @@ const getMonthIncome = (total = 0, interestRate = 0, from, to) => {
   return to ? convertTo(monthIncome, from, to) : monthIncome
 }
 
-const getTotalUSD = (assets) => format(assets.reduce((sum, asset) => sum + asset.valueUSD, 0))
+const getTotalUSD = (assets) => format(assets.reduce((sum, asset) => sum + asset.valueUSD, 0));
+
 const getMonthlyTotalUSD = (assets) => format(assets.reduce((sum, asset) => sum + asset.monthIncomeUSD, 0));
+
+const getMonthlyTotalUAH = (assets) => {
+  return format(assets.reduce((sum, asset) => {
+    return sum + (asset.currency === 'UAH' ? asset.monthIncomeInitial : convertTo(asset.monthIncomeInitial, asset.currency, 'UAH'))
+  }, 0), 'UAH')
+};
 
 window.currency = {
   format,
@@ -25,4 +32,5 @@ window.currency = {
   getMonthIncome,
   getTotalUSD,
   getMonthlyTotalUSD,
+  getMonthlyTotalUAH,
 }

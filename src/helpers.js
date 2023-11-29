@@ -7,9 +7,11 @@ window.constants = {
   },
   currencyRates: {
     USD_UAH: 36.020,
-    UAH_USD: 0.027,
     USD_EUR: 0.910,
     EUR_USD: 1.081,
+    EUR_UAH: 39.817,
+    UAH_USD: 0.027,
+    UAH_EUR: 0.024,
     USD_USD: 1,
     EUR_EUR: 1,
     UAH_UAH: 1,
