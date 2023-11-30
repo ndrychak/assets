@@ -25,17 +25,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <script src="https://accounts.google.com/gsi/client" defer></script>
-  <script src="src/helpers.js?v=1" defer></script>
-  <script src="src/currency.js?v=1" defer></script>
-  <script src="src/templates.js?v=1" defer></script>
-  <script src="src/main.js?v=1" defer></script>
+  <script src="src/js/index.js?v=1" type="module" defer></script>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="dist/output.css?v=1">
 </head>
 
 <body class="text-white bg-black h-full font-roboto">
-  <section id="content" class="max-w-screen-lg mx-auto px-3"></section>
+  <section class="max-w-screen-lg mx-auto px-3">
+    <section id="header"></section>
+    <section id="content"></section>
+    <section id="footer"></section>
+    <section id="login"></section>
+  </section>
 </body>
 
 </html>
