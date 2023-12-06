@@ -23,15 +23,14 @@ export const FooterModule = (renderAssets) => {
   const addListeners = () => {
     document.getElementById('refreshBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      api.requestSheet().then(() => {
-        renderAssets && renderAssets();
-      });
+      const callback = () => {
+        renderAssets && renderAssets()
+      }
+      api().requestSheet(callback)
     });
 
     document.getElementById('chartsBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      
-
     });
   }
 

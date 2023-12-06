@@ -3,17 +3,18 @@ import { api } from '../helpers/api.js'
 
 export const LoginModule = (renderAll) => {
   const tokenCallback = () => {
-    api.requestSheet().then(() => {
+    const callback = () => {
       document.getElementById('login').remove()
       renderAll && renderAll();
-    });
+    }
+    api().requestSheet(callback)
   }
 
   const addListeners = () => {
     document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault()
       storage.apiData.set(Object.fromEntries(new FormData(e.target)))
-      api.requestToken(tokenCallback)
+      api().requestToken(tokenCallback)
     });
   }
 
