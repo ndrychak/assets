@@ -24,7 +24,7 @@ export const AssetsModule = () => {
       return acc;
     }, '');
 
-    return `<ul class="grid gap-2 grid-cols-2 pb-24">${list}</ul>`
+    return `<ul class="grid gap-1 grid-cols-2 pb-24">${list}</ul>`
   }
 
   const render = () => {
