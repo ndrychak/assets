@@ -2,8 +2,8 @@ import { api } from '../helpers/api.js'
 
 export const FooterModule = (renderAssets) => {
   const template = () => {
-    const buttonStyles = 'relative w-20 h-10 rounded-t-lg text-xs bg-gradient-to-r from-[#1E293B] to-[#40435C]'
-    const imageStyles = 'absolute w-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+    const buttonStyles = 'relative w-20 h-10 rounded-t-lg text-xs bg-gradient-to-r from-[#ECB635] to-[#FFC646]'
+    const imageStyles = 'absolute w-5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
 
     return `
       <ul class="fixed flex gap-2 bottom-0 right-4">
