@@ -4,10 +4,14 @@ import { AssetsModule } from './modules/assets.js'
 import { HeaderModule } from './modules/header.js'
 import { FooterModule } from './modules/footer.js'
 
-const renderAll = () => {
+const renderDynamicData = () => {
   HeaderModule().render()
   AssetsModule().render()
-  FooterModule(AssetsModule().render).render()
+}
+
+const renderAll = () => {
+  renderDynamicData()
+  FooterModule(renderDynamicData).render()
 }
 
 addEventListener('DOMContentLoaded', () => {
