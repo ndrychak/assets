@@ -1,4 +1,6 @@
 import { api } from '../helpers/api.js'
+import { ModalModule } from './modal.js'
+import { ChartModule } from './chart.js'
 
 export const FooterModule = (renderAssets) => {
   const template = () => {
@@ -22,7 +24,8 @@ export const FooterModule = (renderAssets) => {
 
   const addListeners = () => {
     document.getElementById('refreshBtn').addEventListener('click', (e) => {
-      e.preventDefault();
+      e.preventDefault()
+
       const callback = () => {
         renderAssets && renderAssets()
       }
@@ -30,7 +33,8 @@ export const FooterModule = (renderAssets) => {
     });
 
     document.getElementById('chartsBtn').addEventListener('click', (e) => {
-      e.preventDefault();
+      e.preventDefault()
+      ModalModule().render(ChartModule().render)
     });
   }
 
