@@ -5,6 +5,8 @@ export const ChartModule = () => {
     hoverOffset: 10,
     circumference: 180,
     rotation: -90,
+    radius: 150,
+    cutout: '65%',
     borderWidth: 1,
     borderColor: '#000',
     color: '#FFF',
@@ -97,7 +99,7 @@ export const ChartModule = () => {
   const render = () => {
     document.getElementById('modalContent').innerHTML = `
       <div class="m-auto">
-        <canvas id="chartctx" class="p-4 -my-14"></canvas>
+        <canvas id="chartctx" class="p-4 -my-20"></canvas>
         <div id="chartLegend" class="grid grid-cols-2 gap-2 mb-2"></div>
       </div>`
     chartByType(document.getElementById('chartctx'))
