@@ -16,7 +16,7 @@ export const AssetsModule = () => {
         note: item.note,
         currency: item.currency,
         valueUSD: `<span class="${valueClass}">${money().format(item.valueUSD)}</span>`,
-        incomeUSD: item.interestRate > 0.01 ? `<span class="${valueClass} text-base ml-2">${money().format(item.monthIncomeUSD)}</span>` : '',
+        incomeUSD: item.interestRate > 0.01 ? `<span class="${valueClass} text-base ml-2 text-yellow-400">${money().format(item.monthIncomeUSD)}</span>` : '',
         rate
       })
 
