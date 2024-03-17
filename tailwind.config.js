@@ -3,7 +3,7 @@ module.exports = {
   content: ['index.html', 'src/js/**/*.js'],
   theme: {
     fontFamily: {
-      roboto: ['Roboto', 'sans-serif']
+      jaldi: ['Jaldi', 'sans-serif']
     },
     extend: {},
   },
