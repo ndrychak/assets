@@ -3,22 +3,26 @@ import { ModalModule } from './modal.js'
 import { ChartModule } from './chart.js'
 
 export const FooterModule = (renderAssets) => {
-  const template = () => {
-    const buttonStyles = 'relative rounded-full text-xs bg-gradient-to-r from-[#ECB635] to-[#FFC646]'
-    const imageStyles = 'absolute w-5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+  const renderButton = (type) => {
+    return `<button id="${type}Btn" class="relative w-16 h-16">
+              <img src="assets/${type}.png" class="absolute w-5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"/>
+            </button>`
+  }
 
+   const template = () => {
     return `
-      <ul class="fixed flex gap-4 bottom-6 right-4 items-baseline">
+      <ul class="fixed grid grid-cols-5 gap-4 bottom-0 w-full p-4 items-baseline">
         <li>
-          <button id="chartsBtn" class="${buttonStyles} w-10 h-10">
-            <img src="assets/chart.png" class="${imageStyles}"/>
-          </button>  
+          ${renderButton('currency')}
         </li>
+        <li></li>
         <li>
-        <button id="refreshBtn" class="${buttonStyles} w-16 h-16">
-          <img src="assets/refresh.png" class="${imageStyles}"/>
-        </button>
-      </li>
+          ${renderButton('refresh')}
+        </li>
+        <li></li>
+        <li>
+          ${renderButton('chart')}
+        </li>
     </ul>`
   }
 
@@ -32,7 +36,7 @@ export const FooterModule = (renderAssets) => {
       api().requestSheet(callback)
     });
 
-    document.getElementById('chartsBtn').addEventListener('click', (e) => {
+    document.getElementById('chartBtn').addEventListener('click', (e) => {
       e.preventDefault()
       ModalModule().render(ChartModule().render)
     });
