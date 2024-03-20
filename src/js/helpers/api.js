@@ -1,15 +1,36 @@
 import { storage } from './storage.js'
 
 export const api = () => {
-  async function initializeGapiClient() {
+  async function initializeGapiClient(callback) {
     await gapi.client.init({
-      apiKey: 'AIzaSyAmJ6QWq8jdBlstGh4BZ41OY0hsCZghego',
+      apiKey: '',
       discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
     });
+
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: storage.apiData.get().clientId,
+      scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
+      callback: ''
+    });
+
+    tokenClient.callback = async (response) => {
+      if (response.error !== undefined) {
+        throw (response);
+      }
+     
+      storage.accessToken.set(response.access_token);
+      callback(response);
+    };
+
+    if (gapi.client.getToken() === null) {
+      tokenClient.requestAccessToken({prompt: 'consent'});
+    } else {
+      tokenClient.requestAccessToken({prompt: ''});
+    }
   }
-  
-  const initAPI = () => {
-    gapi.load('client', initializeGapiClient);
+
+  const auth = (callback) => {
+    gapi.load('client', () => initializeGapiClient(callback));
   }
 
   async function getAssets() {
@@ -37,35 +58,11 @@ export const api = () => {
       })
   }
 
-  const auth = (callback) => {
-    const tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: storage.apiData.get().clientId,
-      scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
-      callback: ''
-    });
-
-    tokenClient.callback = async (response) => {
-      if (response.error !== undefined) {
-        throw (response);
-      }
-     
-      storage.accessToken.set(response.access_token);
-      callback(response);
-    };
-
-    if (gapi.client.getToken() === null) {
-      tokenClient.requestAccessToken({prompt: 'consent'});
-    } else {
-      tokenClient.requestAccessToken({prompt: ''});
-    }
-  }
-
   const addAsset = () => {    
 
   }
 
   return {
-    initAPI,
     auth,
     requestSheet,
     addAsset,
