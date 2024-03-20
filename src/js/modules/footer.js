@@ -4,36 +4,21 @@ import { ChartModule } from './chart.js'
 
 export const FooterModule = (renderAssets) => {
   const renderButton = (type) => {
-    return `<button id="${type}Btn" class="relative w-16 h-16">
+    return type ? `<button id="${type}Btn" class="relative w-16 h-16">
               <img src="assets/${type}.png" class="absolute w-5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"/>
-            </button>`
+            </button>` : ''
   }
 
-   const template = () => {
-    return `
-      <ul class="fixed grid grid-cols-5 gap-4 bottom-0 w-full p-4 items-baseline">
-        <li>
-          ${renderButton('currency')}
-        </li>
-        <li></li>
-        <li>
-          ${renderButton('refresh')}
-        </li>
-        <li></li>
-        <li>
-          ${renderButton('chart')}
-        </li>
-    </ul>`
-  }
+  const buttons = ['currency', '', 'add', '', 'chart'].map(button => (`<li class="text-center">${renderButton(button)}</li>`)).join('')
+  const template = () => (`<ul class="fixed grid grid-cols-5 gap-4 left-0 bottom-0 w-full p-4 items-baseline">${buttons}</ul>`)
 
   const addListeners = () => {
-    document.getElementById('refreshBtn').addEventListener('click', (e) => {
+    document.getElementById('addBtn').addEventListener('click', (e) => {
       e.preventDefault()
 
-      const callback = () => {
+      api().addAsset(() => {
         renderAssets && renderAssets()
-      }
-      api().requestSheet(callback)
+      })
     });
 
     document.getElementById('chartBtn').addEventListener('click', (e) => {
