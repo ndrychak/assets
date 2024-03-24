@@ -16,9 +16,9 @@ export const FooterModule = (renderAssets) => {
     document.getElementById('addBtn').addEventListener('click', (e) => {
       e.preventDefault()
 
-      api().addAsset(() => {
-        renderAssets && renderAssets()
-      })
+      // api().addAsset(() => {
+      //   renderAssets && renderAssets()
+      // })
     });
 
     document.getElementById('chartBtn').addEventListener('click', (e) => {

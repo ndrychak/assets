@@ -5,7 +5,11 @@ module.exports = {
     fontFamily: {
       jaldi: ['Jaldi', 'sans-serif']
     },
-    extend: {},
+    extend: {
+      boxShadow: {
+        'modal': '0px 0px 20px 10px #000'
+      }
+    },
   },
   plugins: [],
 }

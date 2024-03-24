@@ -1,11 +1,12 @@
 import { storage } from '../helpers/storage.js'
+import { money } from '../helpers/money.js'
 
 export const ChartModule = () => {
   const chartOptions = {
     hoverOffset: 10,
     circumference: 180,
     rotation: -90,
-    radius: 150,
+    radius: 120,
     cutout: '65%',
     borderWidth: 1,
     borderColor: '#000',
@@ -39,7 +40,12 @@ export const ChartModule = () => {
 
       acc = acc + `
       <div class="flex items-center rounded-lg ${gradient}">
-        <span class="py-3 mr-3 w-14 text-center rounded-lg font-bold ${bgColors[idx]}">${~~((item / sum) * 100)}%</span> ${data.labels[idx]}
+        <div class="h-10 w-10 m-1 text-center content-center font-bold rounded-lg ${bgColors[idx]}">
+          ${~~((item / sum) * 100)}%
+        </div>
+        <div class="flex justify-between grow px-4">
+          <span class="font-bold">${data.labels[idx]}</span>${money().format(item)}
+        </div>
       </div>`
       return acc
     }, '')
@@ -99,7 +105,7 @@ export const ChartModule = () => {
   const render = () => {
     document.getElementById('modalContent').innerHTML = `
       <div class="m-auto">
-        <canvas id="chartctx" class="p-4 -my-20"></canvas>
+        <canvas id="chartctx" class="-my-28"></canvas>
         <div id="chartLegend" class="grid grid-cols-2 gap-2 mb-2"></div>
       </div>`
     chartByType(document.getElementById('chartctx'))

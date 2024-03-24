@@ -5,7 +5,7 @@ export const ModalModule = () => {
   
   const template = () => {
     return `
-      <section id="modalContent" class="fixed bottom-0 w-full p-4 rounded-t-lg bg-gradient-to-r from-black to-slate-900"></section>`
+      <section id="modalContent" class="fixed bottom-0 w-full p-2 pb-10 rounded-t-lg bg-black shadow-modal"></section>`
   }
 
   const addListeners = () => {
@@ -15,7 +15,7 @@ export const ModalModule = () => {
     function checkDirection() {
       if (touchendY > touchstartY + 100) {
         html.classList.remove(['overscroll-none'])
-        content.classList.remove(['blur-[2px]'])
+        content.classList.remove(...['blur-[1px]', 'brightness-50'])
         modal.innerHTML = ''
         modal.removeEventListener('touchstart')
         modal.removeEventListener('touchend')
@@ -35,7 +35,7 @@ export const ModalModule = () => {
   const render = (callback) => {
     modal.innerHTML = template()
     html.classList.add(['overscroll-none'])
-    content.classList.add(['blur-[2px]'])
+    content.classList.add(...['blur-[1px]', 'brightness-50'])
     addListeners()
     callback && callback()
   }
