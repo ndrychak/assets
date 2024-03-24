@@ -623,6 +623,10 @@ video {
   margin-top: 1rem;
 }
 
+.mr-0 {
+  margin-right: 0px;
+}
+
 .flex {
   display: flex;
 }

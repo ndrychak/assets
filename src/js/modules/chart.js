@@ -40,7 +40,7 @@ export const ChartModule = () => {
 
       acc = acc + `
       <div class="flex items-center rounded-lg ${gradient}">
-        <div class="h-10 w-10 m-1 text-center content-center font-bold rounded-lg ${bgColors[idx]}">
+        <div class="h-10 w-10 m-1 mr-0 text-center content-center font-bold rounded-lg ${bgColors[idx]}">
           ${~~((item / sum) * 100)}%
         </div>
         <div class="flex justify-between grow px-4">
@@ -105,7 +105,7 @@ export const ChartModule = () => {
   const render = () => {
     document.getElementById('modalContent').innerHTML = `
       <div class="m-auto">
-        <canvas id="chartctx" class="-my-28"></canvas>
+        <canvas id="chartctx" class="-my-24"></canvas>
         <div id="chartLegend" class="grid grid-cols-2 gap-2 mb-2"></div>
       </div>`
     chartByType(document.getElementById('chartctx'))
