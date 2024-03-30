@@ -1,9 +1,11 @@
 import { storage } from './storage.js'
 
 export const api = () => {
+  const SHEET_ID = '1-KdKfoODvbDzFkFMIfCTHYqy3uP6RDexo_chF1pOcQ4'
+
   async function initializeGapiClient(callback) {
     await gapi.client.init({
-      apiKey: '',
+      apiKey: storage.apiData.get().apiKey,
       discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
     });
 
@@ -37,7 +39,7 @@ export const api = () => {
     let response;
     try {
       response = await gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: '1-KdKfoODvbDzFkFMIfCTHYqy3uP6RDexo_chF1pOcQ4',
+        spreadsheetId: SHEET_ID,
         range: 'main',
       });
     } catch (err) {
@@ -58,8 +60,29 @@ export const api = () => {
       })
   }
 
-  const addAsset = () => {    
+  async function addAssetRequest(data) {
+    let response;
+    try {
+      response = await gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: SHEET_ID,
+        range: 'main',
+        majorDimension: 'ROWS',
+        values: data,
+        valueInputOption: 'USER_ENTERED'
+      });
+    } catch (err) {
+      console.error('err', err)
+      return;
+    }
 
+    return response.result
+  }
+
+  const addAsset = (data, callback) => {  
+    auth(() => { 
+      addAssetRequest([[Date.now(), data.title, data.note, data.valueInitial, data.currency, data.interestRate]])
+        .then(() => requestSheet(callback))
+    })
   }
 
   return {

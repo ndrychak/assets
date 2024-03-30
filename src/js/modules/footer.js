@@ -1,6 +1,7 @@
 import { api } from '../helpers/api.js'
 import { ModalModule } from './modal.js'
 import { ChartModule } from './chart.js'
+import { AssetFormModule } from './assetForm.js'
 
 export const FooterModule = (renderAssets) => {
   const renderButton = (type) => {
@@ -16,9 +17,7 @@ export const FooterModule = (renderAssets) => {
     document.getElementById('addBtn').addEventListener('click', (e) => {
       e.preventDefault()
 
-      // api().addAsset(() => {
-      //   renderAssets && renderAssets()
-      // })
+      ModalModule().render(AssetFormModule().render)
     });
 
     document.getElementById('chartBtn').addEventListener('click', (e) => {
