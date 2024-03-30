@@ -1,7 +1,7 @@
 import { api } from '../helpers/api.js'
 import { renderDynamic } from '../helpers/render.js'
 
-export const AssetFormModule = () => {
+export const AssetFormModule = (id) => {
   const addListeners = () => {
     document.getElementById('assetForm').addEventListener('submit', (e) => {
       e.preventDefault()
@@ -30,9 +30,10 @@ export const AssetFormModule = () => {
             <option value="UAH">UAH</option>
           </select>
           ${renderInput('interestRate', 'Interest Rate')}
-          <button class="h-10 mt-4 font-bold underline" type="submit">ADD NEW ASSET</button>
+          <button class="h-10 mt-4 font-bold underline" type="submit">${id ? 'EDIT ASSET' : 'ADD NEW ASSET'}</button>
         </form>
       </div>`
+
       addListeners()
   }
 
