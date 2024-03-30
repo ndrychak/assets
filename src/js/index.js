@@ -1,17 +1,11 @@
 import { storage } from './helpers/storage.js'
+import { renderDynamic } from './helpers/render.js'
 import { LoginModule } from './modules/login.js'
-import { AssetsModule } from './modules/assets.js'
-import { HeaderModule } from './modules/header.js'
 import { FooterModule } from './modules/footer.js'
 
-const renderDynamicData = () => {
-  HeaderModule().render()
-  AssetsModule().render()
-}
-
 const renderAll = () => {
-  renderDynamicData()
-  FooterModule(renderDynamicData).render()
+  renderDynamic()
+  FooterModule().render()
 }
 
 addEventListener('DOMContentLoaded', () => {

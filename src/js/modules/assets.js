@@ -12,6 +12,7 @@ export const AssetsModule = () => {
 
       acc = acc + template({
         bg,
+        id: item.id,
         title: item.title,
         note: item.note,
         currency: item.currency,
@@ -32,14 +33,14 @@ export const AssetsModule = () => {
     document.getElementById('content').innerHTML = getAssetsList(assets);
   }
 
-  const template = ({ bg, title, note, valueUSD, incomeUSD, rate, currency, valueInitial, monthIncomeInitial }) => {
+  const template = ({ bg, title, note, valueUSD, incomeUSD, rate, id }) => {
     return `
       <li class="w-full">
-        <div class="w-full relative text-left rounded-xl px-4 py-2 ${bg}">
+        <button id="${id}" class="w-full relative text-left rounded-xl px-4 py-2 ${bg}">
           <p class="text-xl font-bold -mb-2">${title}<span class="text-base float-right">${rate}</span></p>
           <p class="text-base -mb-1">${note}&nbsp;</p>
           <p class="text-xl font-bold">${valueUSD}&nbsp;${incomeUSD}</p>
-        </div>
+        </button>
       </li>`
   }
 

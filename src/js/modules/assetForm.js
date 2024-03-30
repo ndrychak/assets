@@ -1,6 +1,5 @@
 import { api } from '../helpers/api.js'
-import { AssetsModule } from './assets.js'
-import { HeaderModule } from './header.js'
+import { renderDynamic } from '../helpers/render.js'
 
 export const AssetFormModule = () => {
   const addListeners = () => {
@@ -9,14 +8,7 @@ export const AssetFormModule = () => {
       
       api().addAsset(Object.fromEntries(new FormData(e.target)), () => {
         document.getElementById('modal').innerHTML = ''
-
-        HeaderModule().render()
-        AssetsModule().render()
-
-        const html = document.getElementById('html')
-        const content = document.getElementById('content')
-        html.classList.remove(['overscroll-none'])
-        content.classList.remove(...['blur-[1px]', 'brightness-50'])
+        renderDynamic();
       })
     });
   }

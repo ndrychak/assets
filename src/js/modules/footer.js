@@ -1,13 +1,13 @@
-import { api } from '../helpers/api.js'
 import { ModalModule } from './modal.js'
 import { ChartModule } from './chart.js'
 import { AssetFormModule } from './assetForm.js'
 
-export const FooterModule = (renderAssets) => {
+export const FooterModule = () => {
   const renderButton = (type) => {
-    return type ? `<button id="${type}Btn" class="relative w-16 h-16">
-              <img src="assets/${type}.png" class="absolute w-6 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"/>
-            </button>` : ''
+    return type ? `
+      <button id="${type}Btn" class="relative w-16 h-16">
+        <img src="assets/${type}.png" class="absolute w-6 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"/>
+      </button>` : ''
   }
 
   const buttons = ['currency', '', 'add', '', 'chart'].map(button => (`<li class="text-center">${renderButton(button)}</li>`)).join('')
