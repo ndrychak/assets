@@ -10,21 +10,26 @@ export const storage = {
       const assets = [];
 
       data.forEach(item => {
-        const valueInitial = Number(item[3]);
-        const currency = item[4];
-        const interestRate = Number(item[5]);
+        const valueInitial = Number(item[3])
+        const currency = item[4]
+        const interestRate = Number(item[5])
+        const id = item[0]
 
-        assets.push({
-          id: item[0],
-          title: item[1],
-          note: item[2],
-          valueInitial,
-          valueUSD: money().convertTo(valueInitial, currency, 'USD'),
-          currency,
-          interestRate,
-          monthIncomeInitial: interestRate ? money().getMonthIncome(valueInitial, interestRate) : 0,
-          monthIncomeUSD: interestRate ? money().getMonthIncome(valueInitial, interestRate, currency, 'USD') : 0,
-        })
+        if (id) {
+          assets.push({
+            id,
+            title: item[1],
+            note: item[2],
+            valueInitial,
+            valueUSD: money().convertTo(valueInitial, currency, 'USD'),
+            currency,
+            interestRate,
+            monthIncomeInitial: interestRate ? money().getMonthIncome(valueInitial, interestRate) : 0,
+            monthIncomeUSD: interestRate ? money().getMonthIncome(valueInitial, interestRate, currency, 'USD') : 0,
+          })
+        } else {
+          assets.push(null)
+        }
       });
 
       localStorage.setItem('assets_data', JSON.stringify(assets));

@@ -31,10 +31,6 @@ export const api = () => {
     }
   }
 
-  const auth = (callback) => {
-    gapi.load('client', () => initializeGapiClient(callback));
-  }
-
   async function getAssets() {
     let response;
     try {
@@ -50,22 +46,12 @@ export const api = () => {
     return response.result
   }
 
-  const requestSheet = (callback) => {
-    return getAssets()
-      .then(sheet => {
-        storage.assets.set(sheet.values);
-        callback && callback()
-    
-        return storage.assets.get();
-      })
-  }
-
-  async function addAssetRequest(data) {
+  async function updateAssetRequest(data, index) {
     let response;
     try {
-      response = await gapi.client.sheets.spreadsheets.values.append({
+      response = await gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
-        range: 'main',
+        range: `main!${index}:${index}`,
         majorDimension: 'ROWS',
         values: data,
         valueInputOption: 'USER_ENTERED'
@@ -78,9 +64,45 @@ export const api = () => {
     return response.result
   }
 
-  const addAsset = (data, callback) => {  
+  const auth = (callback) => {
+    gapi.load('client', () => initializeGapiClient(callback));
+  }
+
+  const requestSheet = (callback) => {
+    return getAssets()
+      .then(sheet => {
+        storage.assets.set(sheet.values);
+        callback && callback()
+    
+        return storage.assets.get();
+      })
+  }
+
+  const addAsset = (data, callback) => {
+    const allAssets = storage.assets.get()
+    const firstEmptyRow = allAssets.findIndex(asset => !asset)
+    const addIndex = firstEmptyRow > -1 ? firstEmptyRow + 1 : allAssets.length + 1
+
     auth(() => { 
-      addAssetRequest([[Date.now(), data.title, data.note, data.valueInitial, data.currency, data.interestRate]])
+      updateAssetRequest([[Date.now(), data.title, data.note, data.valueInitial, data.currency, data.interestRate]], addIndex)
+        .then(() => requestSheet(callback))
+    })
+  }
+
+  const updateAsset = (id, data, callback) => {
+    const updateIndex = storage.assets.get().findIndex(asset => (asset && asset.id === id)) + 1
+
+    auth(() => { 
+      updateAssetRequest([[Date.now(), data.title, data.note, data.valueInitial, data.currency, data.interestRate]], updateIndex)
+        .then(() => requestSheet(callback))
+    })
+  }
+
+  const deleteAsset = (id, callback) => {  
+    const deleteIndex = storage.assets.get().findIndex(asset => (asset && asset.id === id)) + 1
+
+    auth(() => { 
+      updateAssetRequest([['', '', '', '', '', '', '']], deleteIndex)
         .then(() => requestSheet(callback))
     })
   }
@@ -89,5 +111,7 @@ export const api = () => {
     auth,
     requestSheet,
     addAsset,
+    updateAsset,
+    deleteAsset,
   }
 }

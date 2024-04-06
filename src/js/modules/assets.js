@@ -35,7 +35,7 @@ export const AssetsModule = () => {
       return acc;
     }, '');
 
-    return `<ul class="grid gap-2 grid-cols-2 mx-2 mt-4 pb-10">${list}</ul>`
+    return `<ul class="grid gap-2 grid-cols-2 mx-2 mt-4 pb-24">${list}</ul>`
   }
 
   const addListeners = () => {
@@ -51,9 +51,9 @@ export const AssetsModule = () => {
   }
 
   const render = () => {
-    const assets = storage.assets.get().sort((a, b) => b.valueUSD - a.valueUSD)
+    const assets = storage.assets.get().sort((a, b) => (b ? b.valueUSD : 0) - (a ? a.valueUSD : 0))
 
-    document.getElementById('content').innerHTML = getAssetsList(assets)
+    document.getElementById('content').innerHTML = getAssetsList(assets.filter(Boolean))
     addListeners()
   }
 
