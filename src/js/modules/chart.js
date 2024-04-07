@@ -56,6 +56,10 @@ export const ChartModule = () => {
   const getChartByTypeData = () => {
     const assets = storage.assets.get()
     const groupByTitle = assets.reduce((acc, item) => {
+      if (!item) {
+        return acc
+      }
+
       const index = acc.labels.indexOf(item.title)
 
       if (index < 0) {
@@ -102,11 +106,47 @@ export const ChartModule = () => {
     renderLegend(data)
   }
 
+  const chartByCurrency = () => {
+    const assets = storage.assets.get()
+    const groupByCurrency = assets.reduce((acc, item) => {
+      if (!item) {
+        return acc
+      }
+
+      acc[item.currency] = acc[item.currency] + item.valueUSD
+      acc.total = acc.total + item.valueUSD
+
+      return acc
+    }, {
+      USD: 0,
+      UAH: 0,
+      EUR: 0,
+      total: 0
+    })
+    
+    const chartData = {
+      USD: ~~(groupByCurrency.USD / groupByCurrency.total * 100),
+      UAH: ~~(groupByCurrency.UAH / groupByCurrency.total * 100),
+      EUR: ~~(groupByCurrency.EUR / groupByCurrency.total * 100)
+    }
+
+    return `
+      <div class="flex h-6 text-center rounded-lg overflow-hidden">
+        <span class="min-w-fit px-2 bg-[#105a37]" style="width: ${chartData.USD}%">USD ${chartData.USD}%</span>
+        <span class="min-w-fit px-2 bg-[#9A89B4]" style="width: ${chartData.UAH}%">UAH ${chartData.UAH}%</span>
+        <span class="min-w-fit px-2 bg-[#006796]"  style="width: ${chartData.EUR}%">EUR ${chartData.EUR}%</span>
+      </div>`
+  }
+
   const render = () => {
     document.getElementById('modalContent').innerHTML = `
       <div class="m-auto">
         <canvas id="chartctx" class="-my-24"></canvas>
         <div id="chartLegend" class="grid grid-cols-2 gap-2 mb-2"></div>
+
+        <div class="mt-4 pt-4 border-t-2 border-t-slate-800">
+          ${chartByCurrency()}
+        </div>
       </div>`
     chartByType(document.getElementById('chartctx'))
   }

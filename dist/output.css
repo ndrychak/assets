@@ -645,6 +645,18 @@ video {
   height: calc(100vh - 160px);
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
+.h-4 {
+  height: 1rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
 .w-10 {
   width: 2.5rem;
 }
@@ -663,6 +675,16 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.min-w-min {
+  min-width: -moz-min-content;
+  min-width: min-content;
+}
+
+.min-w-fit {
+  min-width: -moz-fit-content;
+  min-width: fit-content;
 }
 
 .max-w-screen-lg {
@@ -731,6 +753,10 @@ video {
   gap: 1rem;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .overscroll-none {
   overscroll-behavior: none;
 }
@@ -750,6 +776,15 @@ video {
 .rounded-t-xl {
   border-top-left-radius: 0.75rem;
   border-top-right-radius: 0.75rem;
+}
+
+.border-t-2 {
+  border-top-width: 2px;
+}
+
+.border-t-slate-800 {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(30 41 59 / var(--tw-border-opacity));
 }
 
 .bg-\[\#00526C\] {
@@ -790,6 +825,60 @@ video {
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
+.bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+}
+
+.bg-amber-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(180 83 9 / var(--tw-bg-opacity));
+}
+
+.bg-blue-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.bg-green-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#85BB65\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(133 187 101 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#006796\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 103 150 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#105a37\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 90 55 / var(--tw-bg-opacity));
+}
+
+.bg-violet-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(139 92 246 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#\#9A89B4\] {
+  background-color: ##9A89B4;
+}
+
+.bg-\[\#9A89B4\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(154 137 180 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#B7A2D7\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(183 162 215 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-r {
@@ -834,12 +923,21 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .pb-10 {
   padding-bottom: 2.5rem;
 }
 
 .pb-24 {
   padding-bottom: 6rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
 }
 
 .text-left {
