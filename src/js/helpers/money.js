@@ -11,14 +11,14 @@ export const money = () => {
 
   const convertTo = (total = 0, from = 'UAH', to = 'USD') => {
     const currencyRates = {
-      USD_UAH: 38.650,
-      UAH_USD: 0.026,
+      USD_UAH: 39.150,
+      UAH_USD: 0.025,
 
-      EUR_UAH: 42.600,
-      UAH_EUR: 0.023,
+      EUR_UAH: 41.620,
+      UAH_EUR: 0.024,
 
-      USD_EUR: 0.911,
-      EUR_USD: 1.080,
+      USD_EUR: 0.931,
+      EUR_USD: 1.056,
 
       USD_USD: 1,
       EUR_EUR: 1,
