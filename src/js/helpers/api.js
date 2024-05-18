@@ -11,7 +11,7 @@ export const api = () => {
 
     const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: storage.apiData.get().clientId,
-      scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
+      scope: 'https://www.googleapis.com/auth/spreadsheets',
       callback: ''
     });
 
