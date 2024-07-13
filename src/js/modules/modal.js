@@ -11,25 +11,28 @@ export const ModalModule = () => {
   const addListeners = () => {
     let touchstartY = 0
     let touchendY = 0
+
+    const onTouchstart = (e) => {
+      touchstartY = e.changedTouches[0].screenY
+    }
+
+    const onTouchEnd = (e) => {
+      touchendY = e.changedTouches[0].screenY
+      checkDirection()
+    }
         
     function checkDirection() {
       if (touchendY > touchstartY + 100) {
         html.classList.remove(['overscroll-none'])
         content.classList.remove(...['blur-[1px]', 'brightness-50'])
         modal.innerHTML = ''
-        modal.removeEventListener('touchstart')
-        modal.removeEventListener('touchend')
+        modal.removeEventListener('touchstart', onTouchstart)
+        modal.removeEventListener('touchend', onTouchEnd)
       }
     }
 
-    modal.addEventListener('touchstart', e => {
-      touchstartY = e.changedTouches[0].screenY
-    })
-
-    modal.addEventListener('touchend', e => {
-      touchendY = e.changedTouches[0].screenY
-      checkDirection()
-    })
+    modal.addEventListener('touchstart', onTouchstart)
+    modal.addEventListener('touchend', onTouchEnd)
   }
 
   const render = (callback) => {

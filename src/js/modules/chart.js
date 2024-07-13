@@ -23,13 +23,13 @@ export const ChartModule = () => {
     }
   }
   const bgColors = [
-    'bg-[#00526C]',
-    'bg-[#007787]',
-    'bg-[#009C91]',
-    'bg-[#48C08B]',
-    'bg-[#5E6C9E]',
-    'bg-[#B980B3]',
-    'bg-[#E28BB2]',
+    'bg-[#005f73]',
+    'bg-[#0a9396]',
+    'bg-[#ee9b00]',
+    'bg-[#ca6702]',
+    'bg-[#bb3e03]',
+    'bg-[#ae2012]',
+    'bg-[#9b2226]',
   ]
 
   const renderLegend = (data) => {
@@ -53,40 +53,44 @@ export const ChartModule = () => {
     legendContainer.innerHTML = legend
   }
 
-  const getChartByTypeData = () => {
+  const getChartData = () => {
     const assets = storage.assets.get()
     const groupByTitle = assets.reduce((acc, item) => {
       if (!item) {
         return acc
       }
 
-      const index = acc.labels.indexOf(item.title)
+      const index = acc.findIndex(a => a.label === item.title)
 
       if (index < 0) {
-        acc.labels.push(item.title)
-        acc.data.push(item.valueUSD)
-        acc.profitable.push(!!item.interestRate)
+        acc.push({
+          label: item.title,
+          value: item.valueUSD,
+          isProfitable: !!item.interestRate
+        })
       } else {
-        acc.data = acc.data.with(index, acc.data[index] + item.valueUSD)
+        acc.data = acc.with(index, {
+          label: acc[index].title,       
+          value: acc[index].value + item.valueUSD,
+          isProfitable: acc[index].isProfitable
+        })
       }
 
       return acc
-    }, {
-      labels: [],
-      data: [],
-      profitable: [],
-    })
+    }, [])
+
+    groupByTitle.sort((a, b) => b.value - a.value);
 
     return {
-      labels: groupByTitle.labels,
-      data: groupByTitle.data,
-      profitable: groupByTitle.profitable,
+      labels: groupByTitle.map(a => a.label),
+      data: groupByTitle.map(a => a.value),
+      profitable: groupByTitle.map(a => a.isProfitable),
       backgroundColor: bgColors.map((str) => str.match(/(?<=bg-\[).*(?=])/)[0]), 
     }
   }
 
   const chartByType = (ctx) => {
-    const data = getChartByTypeData()
+    const data = getChartData()
 
     new Chart(ctx, {
       type: 'doughnut',
@@ -132,9 +136,9 @@ export const ChartModule = () => {
 
     return `
       <div class="flex h-6 text-center rounded-lg overflow-hidden">
-        <span class="min-w-fit px-2 bg-[#105a37]" style="width: ${chartData.USD}%">USD ${chartData.USD}%</span>
-        <span class="min-w-fit px-2 bg-[#9A89B4]" style="width: ${chartData.UAH}%">UAH ${chartData.UAH}%</span>
-        <span class="min-w-fit px-2 bg-[#006796]"  style="width: ${chartData.EUR}%">EUR ${chartData.EUR}%</span>
+        <span class="min-w-fit px-2 bg-[#31572c]" style="width: ${chartData.USD}%">USD ${chartData.USD}%</span>
+        <span class="min-w-fit px-2 bg-[#806020]" style="width: ${chartData.UAH}%">UAH ${chartData.UAH}%</span>
+        <span class="min-w-fit px-2 bg-[#023e7d]"  style="width: ${chartData.EUR}%">EUR ${chartData.EUR}%</span>
       </div>`
   }
 
