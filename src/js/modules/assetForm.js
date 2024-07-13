@@ -33,22 +33,22 @@ export const AssetFormModule = (id) => {
   }
 
   const renderButton = (type) => {
-    const className = 'px-4 py-2 font-bold underline'
+    const className = 'px-5 py-3 font-bold rounded-xl'
     let btn
 
     switch (type) {
       case 'add':
-        btn = `<button class="${className}" type="button" id="btnAddAsset">ADD NEW ASSET</button>`
+        btn = `<button class="${className} bg-[#1F4344] ml-auto" type="button" id="btnAddAsset">ADD NEW ASSET</button>`
         break
       case 'edit':
-        btn = `<button class="${className}" type="button" id="btnEditAsset">EDIT ASSET</button>`
+        btn = `<button class="${className} bg-[#1F4344]" type="button" id="btnEditAsset">EDIT ASSET</button>`
         break
       case 'delete': 
-        btn = `<button class="${className} text-red-600" type="button" id="btnDeleteAsset">DELETE</button>`
+        btn = `<button class="${className} bg-[#8d0801]" type="button" id="btnDeleteAsset">DELETE</button>`
         break
     }
 
-    return `<div class="flex justify-center mt-4">${btn}</div>`
+    return btn
   }
 
   const render = () => {
@@ -66,7 +66,9 @@ export const AssetFormModule = (id) => {
             <option value="UAH" ${editAsset.currency === 'UAH' ? 'selected' : ''}>UAH</option>
           </select>
           ${renderInput('interestRate', editAsset.interestRate, 'Interest Rate')}
-          ${id ? `${renderButton('edit')}${renderButton('delete')}` : renderButton('add')}
+          <div class="flex mt-4 justify-between">
+            ${id ? `${renderButton('delete')}${renderButton('edit')}` : renderButton('add')}
+          </div>
         </form>
       </div>`
 
