@@ -1,6 +1,7 @@
 import { ModalModule } from './modal.js'
 import { ChartModule } from './chart.js'
 import { AssetFormModule } from './assetForm.js'
+import { CurrencyModule } from './currency.js'
 
 export const FooterModule = () => {
   const renderButton = (type) => {
@@ -14,6 +15,11 @@ export const FooterModule = () => {
   const template = () => (`<ul class="fixed grid grid-cols-5 gap-4 left-0 bottom-0 w-full p-4 bg-black rounded-t-xl items-baseline">${buttons}</ul>`)
 
   const addListeners = () => {
+    document.getElementById('currencyBtn').addEventListener('click', (e) => {
+      e.preventDefault()
+      ModalModule().render(CurrencyModule().render)
+    });
+
     document.getElementById('addBtn').addEventListener('click', (e) => {
       e.preventDefault()
 

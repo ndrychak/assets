@@ -38,7 +38,7 @@ export const AssetFormModule = (id) => {
 
     switch (type) {
       case 'add':
-        btn = `<button class="${className} bg-[#1F4344] ml-auto" type="button" id="btnAddAsset">ADD NEW ASSET</button>`
+        btn = `<button class="${className} bg-[#1F4344] m-auto" type="button" id="btnAddAsset">ADD NEW ASSET</button>`
         break
       case 'edit':
         btn = `<button class="${className} bg-[#1F4344]" type="button" id="btnEditAsset">EDIT ASSET</button>`

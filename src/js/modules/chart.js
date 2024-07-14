@@ -36,7 +36,7 @@ export const ChartModule = () => {
     const legendContainer = document.getElementById('chartLegend')
     const sum = data.data.reduce((a, b) => a + b, 0)
     const legend = data.data.reduce((acc, item, idx) => {
-    const gradient = data.profitable[idx] ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800'
+      const gradient = data.profitable[idx] ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800'
 
       acc = acc + `
       <div class="flex items-center rounded-lg ${gradient}">
@@ -69,8 +69,8 @@ export const ChartModule = () => {
           isProfitable: !!item.interestRate
         })
       } else {
-        acc.data = acc.with(index, {
-          label: acc[index].title,       
+        acc = acc.with(index, {
+          label: acc[index].label,       
           value: acc[index].value + item.valueUSD,
           isProfitable: acc[index].isProfitable
         })
@@ -129,9 +129,9 @@ export const ChartModule = () => {
     })
     
     const chartData = {
-      USD: ~~(groupByCurrency.USD / groupByCurrency.total * 100),
-      UAH: ~~(groupByCurrency.UAH / groupByCurrency.total * 100),
-      EUR: ~~(groupByCurrency.EUR / groupByCurrency.total * 100)
+      USD: Math.round(groupByCurrency.USD / groupByCurrency.total * 100),
+      UAH: Math.round(groupByCurrency.UAH / groupByCurrency.total * 100),
+      EUR: Math.round(groupByCurrency.EUR / groupByCurrency.total * 100)
     }
 
     return `
@@ -142,12 +142,51 @@ export const ChartModule = () => {
       </div>`
   }
 
+  const chartByProfit = () => {
+    const assets = storage.assets.get()
+    const groupByProfit = assets.reduce((acc, item) => {
+      if (!item) {
+        return acc
+      }
+
+      if (!!item.interestRate) {
+        acc.profit = acc.profit + item.valueUSD
+      } else {
+        acc.nonProfit = acc.nonProfit + item.valueUSD
+      }
+
+      acc.total = acc.total + item.valueUSD
+
+      return acc
+    }, {
+      profit: 0,
+      nonProfit: 0,
+      total: 0,
+    })
+
+    console.log('groupByProfit', groupByProfit)
+    
+    const chartData = {
+      profit: Math.round(groupByProfit.profit / groupByProfit.total * 100),
+      nonProfit: Math.round(groupByProfit.nonProfit / groupByProfit.total * 100),
+    }
+
+    return `
+      <div class="flex h-6 text-center rounded-lg overflow-hidden">
+        <span class="min-w-fit px-2 bg-gradient-to-r from-[#142b2c] to-[#1F4344]" style="width: ${chartData.profit}%">${chartData.profit}%</span>
+        <span class="min-w-fit px-2 bg-gradient-to-r from-slate-900 to-slate-800" style="width: ${chartData.nonProfit}%">${chartData.nonProfit}%</span>
+      </div>`
+  }
+
   const render = () => {
     document.getElementById('modalContent').innerHTML = `
       <div class="m-auto">
         <canvas id="chartctx" class="-my-24"></canvas>
         <div id="chartLegend" class="grid grid-cols-2 gap-2 mb-2"></div>
 
+        <div class="mt-4 pt-4 border-t-2 border-t-slate-800">
+          ${chartByProfit()}
+        </div>
         <div class="mt-4 pt-4 border-t-2 border-t-slate-800">
           ${chartByCurrency()}
         </div>

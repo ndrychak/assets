@@ -621,6 +621,14 @@ video {
   margin-left: auto;
 }
 
+.-mr-2 {
+  margin-right: -0.5rem;
+}
+
+.-mr-4 {
+  margin-right: -1rem;
+}
+
 .flex {
   display: flex;
 }
@@ -673,6 +681,22 @@ video {
   width: 100%;
 }
 
+.w-\[85px\] {
+  width: 85px;
+}
+
+.w-\[21\%\] {
+  width: 21%;
+}
+
+.w-\[22\%\] {
+  width: 22%;
+}
+
+.w-\[26\%\] {
+  width: 26%;
+}
+
 .min-w-fit {
   min-width: -moz-fit-content;
   min-width: fit-content;
@@ -680,6 +704,10 @@ video {
 
 .max-w-screen-lg {
   max-width: 1024px;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
 }
 
 .grow {
@@ -748,12 +776,20 @@ video {
   gap: 1rem;
 }
 
+.gap-1 {
+  gap: 0.25rem;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
 
 .overscroll-none {
   overscroll-behavior: none;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 
 .rounded-lg {
