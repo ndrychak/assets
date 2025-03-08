@@ -4,7 +4,7 @@ import { storage } from '../helpers/storage.js'
 export const HeaderModule = () => {
   const template = (total, monthlyUSD, monthlyUAH) => {
     return `
-      <header class="m-2 p-4 rounded-xl flex flex-row gap-4 justify-between">
+      <header class="m-2 p-4 flex flex-row gap-4 justify-between">
         <div>
           <h1 class="text-xl">Balance</h1>
           <h2 class="text-3xl font-bold">${total}</h1>

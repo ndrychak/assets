@@ -12,7 +12,7 @@ export const FooterModule = () => {
   }
 
   const buttons = ['currency', '', 'add', '', 'chart'].map(button => (`<li class="text-center">${renderButton(button)}</li>`)).join('')
-  const template = () => (`<ul class="fixed grid grid-cols-5 gap-4 left-0 bottom-0 w-full p-4 bg-transparent rounded-t-xl items-baseline">${buttons}</ul>`)
+  const template = () => (`<ul class="fixed grid grid-cols-5 gap-4 left-0 bottom-0 w-full p-4 bg-transparent items-baseline">${buttons}</ul>`)
 
   const addListeners = () => {
     document.getElementById('currencyBtn').addEventListener('click', (e) => {

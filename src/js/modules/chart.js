@@ -36,11 +36,11 @@ export const ChartModule = () => {
     const legendContainer = document.getElementById('chartLegend')
     const sum = data.data.reduce((a, b) => a + b, 0)
     const legend = data.data.reduce((acc, item, idx) => {
-      const gradient = data.profitable[idx] ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800'
+      const gradient = data.profitable[idx] ? 'from-[rgba(20,43,44,.7)] to-[rgba(31,67,68,.7)]' : 'from-[rgba(15,23,42,.7)] to-[rgba(30,41,59,.7)]'
 
       acc = acc + `
-      <div class="flex items-center rounded-lg ${gradient}">
-        <div class="h-10 w-10 m-1 mr-0 text-center content-center font-bold rounded-lg ${bgColors[idx]}">
+      <div class="flex items-center rounded-md bg-gradient-to-r ${gradient}">
+        <div class="h-10 w-10 m-1 mr-0 text-center content-center font-bold rounded-md ${bgColors[idx]}">
           ${~~((item / sum) * 100)}%
         </div>
         <div class="flex justify-between grow px-4">
@@ -135,11 +135,10 @@ export const ChartModule = () => {
     }
 
     return `
-      <div class="flex h-6 text-center rounded-lg overflow-hidden">
+      <div class="flex h-6 text-center rounded-md overflow-hidden">
         <span class="min-w-fit px-2 bg-[#31572c]" style="width: ${chartData.USD}%">USD ${chartData.USD}%</span>
         <span class="min-w-fit px-2 bg-[#806020]" style="width: ${chartData.UAH}%">UAH ${chartData.UAH}%</span>
-        <span class="min-w-fit px-2 bg-[#023e7d]"  style="width: ${chartData.EUR}%">EUR ${chartData.EUR}%</span>
-        ${navigator.standalone}
+        <span class="min-w-fit px-2 bg-[#023e7d]" style="width: ${chartData.EUR}%">EUR ${chartData.EUR}%</span>
       </div>`
   }
 
@@ -164,8 +163,6 @@ export const ChartModule = () => {
       nonProfit: 0,
       total: 0,
     })
-
-    console.log('groupByProfit', groupByProfit)
     
     const chartData = {
       profit: Math.round(groupByProfit.profit / groupByProfit.total * 100),
@@ -173,9 +170,9 @@ export const ChartModule = () => {
     }
 
     return `
-      <div class="flex h-6 text-center rounded-lg overflow-hidden">
-        <span class="min-w-fit px-2 bg-gradient-to-r from-[#142b2c] to-[#1F4344]" style="width: ${chartData.profit}%">${chartData.profit}%</span>
-        <span class="min-w-fit px-2 bg-gradient-to-r from-slate-900 to-slate-800" style="width: ${chartData.nonProfit}%">${chartData.nonProfit}%</span>
+      <div class="flex h-6 text-center rounded-md overflow-hidden">
+        <span class="min-w-fit px-2 bg-gradient-to-r from-[rgba(20,43,44,.7)] to-[rgba(31,67,68,.7)]" style="width: ${chartData.profit}%">${chartData.profit}%</span>
+        <span class="min-w-fit px-2 bg-gradient-to-r from-[rgba(15,23,42,.7)] to-[rgba(30,41,59,.7)]" style="width: ${chartData.nonProfit}%">${chartData.nonProfit}%</span>
       </div>`
   }
 
@@ -183,7 +180,7 @@ export const ChartModule = () => {
     document.getElementById('modalContent').innerHTML = `
       <div class="m-auto">
         <canvas id="chartctx" class="-my-24"></canvas>
-        <div id="chartLegend" class="grid grid-cols-2 gap-2 mb-2"></div>
+        <div id="chartLegend" class="grid grid-cols-2 gap-1 mb-2"></div>
 
         <div class="mt-4 pt-4 border-t-2 border-t-slate-800">
           ${chartByProfit()}

@@ -7,7 +7,7 @@ module.exports = {
     },
     extend: {
       height: {
-        'modal': 'calc(100vh - 160px)',
+        'modal': 'calc(100vh - 30%)',
       },
       boxShadow: {
         'modal': '0px 0px 20px 10px #000'
