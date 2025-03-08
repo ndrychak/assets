@@ -139,6 +139,7 @@ export const ChartModule = () => {
         <span class="min-w-fit px-2 bg-[#31572c]" style="width: ${chartData.USD}%">USD ${chartData.USD}%</span>
         <span class="min-w-fit px-2 bg-[#806020]" style="width: ${chartData.UAH}%">UAH ${chartData.UAH}%</span>
         <span class="min-w-fit px-2 bg-[#023e7d]"  style="width: ${chartData.EUR}%">EUR ${chartData.EUR}%</span>
+        ${navigator.standalone}
       </div>`
   }
 
