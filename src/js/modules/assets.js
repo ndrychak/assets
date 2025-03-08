@@ -7,7 +7,7 @@ export const AssetsModule = () => {
   const template = ({ bg, title, note, valueUSD, incomeUSD, rate, id }) => {
     return `
       <li class="w-full">
-        <button id="${id}" class="asset-button w-full relative text-left rounded-xl px-4 py-2 ${bg}">
+        <button id="${id}" class="asset-button w-full relative text-left rounded-lg px-4 py-2 bg-gradient-to-r ${bg}">
           <p class="text-xl font-bold -mb-2">${title}<span class="text-base float-right">${rate}</span></p>
           <p class="text-base -mb-1">${note}&nbsp;</p>
           <p class="text-xl font-bold">${valueUSD}&nbsp;${incomeUSD}</p>
@@ -17,7 +17,7 @@ export const AssetsModule = () => {
 
   const getAssetsList = (data) => {
     const list = data.reduce((acc, item) => {
-      const bg = item.interestRate ? 'bg-gradient-to-r from-[#142b2c] to-[#1F4344]' : 'bg-gradient-to-r from-slate-900 to-slate-800';
+      const bg = item.interestRate ? 'from-[rgba(20,43,44,.7)] to-[rgba(31,67,68,.7)]' : 'from-[rgba(15,23,42,.7)] to-[rgba(30,41,59,.7)]';
       const rate = item.interestRate > 0.01 ? `${item.interestRate}%` : ''
       const valueClass = item.currency !== 'USD' ? 'opacity-40' : ''
 
@@ -35,7 +35,7 @@ export const AssetsModule = () => {
       return acc;
     }, '');
 
-    return `<ul class="grid gap-2 grid-cols-2 mx-2 mt-4 pb-24">${list}</ul>`
+    return `<ul class="grid gap-1 grid-cols-2 mx-2 mt-4 pb-24">${list}</ul>`
   }
 
   const addListeners = () => {

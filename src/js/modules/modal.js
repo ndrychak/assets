@@ -5,7 +5,7 @@ export const ModalModule = () => {
   
   const template = () => {
     return `
-      <section id="modalContent" class="fixed bottom-0 w-full p-2 pb-10 rounded-t-xl bg-black h-modal"></section>`
+      <section id="modalContent" class="fixed bottom-0 w-full p-2 pb-10 rounded-t-xl bg-[rgba(15,9,24,.95)] h-modal"></section>`
   }
 
   const addListeners = () => {
