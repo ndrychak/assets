@@ -7,7 +7,7 @@ export const AssetsModule = () => {
   const template = ({ bg, title, note, valueUSD, incomeUSD, rate, id }) => {
     return `
       <li class="w-full">
-        <button id="${id}" class="asset-button w-full relative text-left rounded-md px-4 py-2 bg-gradient-to-r ${bg}">
+        <button id="${id}" class="asset-button w-full relative text-left rounded-md shadow-[0_1px_2px_0_rgb(0_0_0_/_.5)] px-4 py-2 bg-gradient-to-r ${bg}">
           <p class="text-xl font-bold -mb-2">${title}<span class="text-base float-right">${rate}</span></p>
           <p class="text-base -mb-1">${note}&nbsp;</p>
           <p class="text-xl font-bold">${valueUSD}&nbsp;${incomeUSD}</p>
@@ -27,8 +27,8 @@ export const AssetsModule = () => {
         title: item.title,
         note: item.note,
         currency: item.currency,
-        valueUSD: `<span class="${valueClass}">${money().format(item.valueUSD)}</span>`,
-        incomeUSD: item.interestRate > 0.01 ? `<span class="${valueClass} text-base ml-2 text-yellow-400">${money().format(item.monthIncomeUSD)}</span>` : '',
+        valueUSD: `<span class="${valueClass}">${money().renderMoney(money().format(item.valueUSD))}</span>`,
+        incomeUSD: item.interestRate > 0.01 ? `<span class="${valueClass} text-base ml-2 text-yellow-400">${money().renderMoney(money().format(item.monthIncomeUSD))}</span>` : '',
         rate
       })
 

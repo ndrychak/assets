@@ -43,6 +43,8 @@ export const money = () => {
     }, 0), 'UAH')
   }
 
+  const renderMoney = (value) => (!!localStorage.getItem('isPrivate') ? '***' : value)
+
   return {
     format,
     convertTo,
@@ -50,5 +52,6 @@ export const money = () => {
     getTotalUSD,
     getMonthlyTotalUSD,
     getMonthlyTotalUAH,
+    renderMoney,
   }
 }

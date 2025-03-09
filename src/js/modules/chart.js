@@ -44,7 +44,7 @@ export const ChartModule = () => {
           ${~~((item / sum) * 100)}%
         </div>
         <div class="flex justify-between grow px-4">
-          <span class="font-bold">${data.labels[idx]}</span>${money().format(item)}
+          <span class="font-bold">${data.labels[idx]}</span>${money().renderMoney(money().format(item))}
         </div>
       </div>`
       return acc
